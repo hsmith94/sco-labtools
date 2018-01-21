@@ -1,0 +1,184 @@
+\documentclass{article}
+
+%\usepackage{preamble}
+%\usepackage{draftwatermark}
+%	\SetWatermarkText{EXAMPLE}
+%	\SetWatermarkScale{5}
+
+%FOR FUNKY TITLE PAGE
+% \usepackage{./files/titlepreamble}
+	\usepackage{xstring,ifthen}			% for coding and boolean in "titlepreamble.sty"
+	\usepackage{datetime}				% for accurate dates and times
+
+%PAGE FORMATTING
+  %FORMAT
+  	\usepackage{microtype}
+	\usepackage[colorlinks=true]{hyperref}	% funky bright links
+		\hypersetup{ %
+			urlcolor=	blue,		%default: magenta
+			linkcolor=	red,		%default: red
+			anchorcolor=black,		%default: black
+			citecolor=	green,		%default: green
+			filecolor=	cyan,		%default: cyan
+			menucolor=	red,		%default: red
+			runcolor=	cyan,		%default: cyan
+			allcolors=	blue,		%will replace all previous
+		}
+	\usepackage{sectsty}					% section heading formatting
+		\allsectionsfont{\normalfont\sffamily\bfseries}			% ALL HEADINGS: bold, sans-serif
+		\chapterfont{\flushright\normalfont\sffamily\bfseries}	% All CHAPTERS: (above +) right-aligned
+  %FONT
+	\renewcommand{\familydefault}{\sfdefault}	% FONT STYLE FOR ENTIRE DOCUMENT
+  %SPACING
+	\usepackage{fullpage}					% wide margins
+	\usepackage[parfill]{parskip}			% paragraph spacing
+  %LAYOUT
+	\usepackage[bottom]{footmisc}			% make footnotes appear at page bottom
+  %SI UNITS
+  	\usepackage{siunitx}					% provides SI units in appropriate formatting
+		\sisetup{separate-uncertainty=true}	% allows plus-minus errors
+		\newcommand{\cm}{\centi\metre}
+		\newcommand{\mm}{\milli\metre}
+		\newcommand{\mT}{\milli\tesla}
+	
+%BOOK FORMATTING
+\usepackage{fancyhdr}						% nice header format
+	\fancyhead[RO, LE]{\textbsf{\thepage}}		% page numbers, on both odd and even
+	\fancyhead[LO]{\textbsf{\leftmark}}			% chapter headings
+	\fancyhead[RE]{\textbsf{\rightmark}}		% section headings
+%\renewcommand{\chaptername}{Lecture}		% change "Chapter" to "Lecture"
+
+%AMS PACKAGES
+\usepackage{amsmath}					% better equations
+\usepackage{amssymb}					% more symbols
+
+%TABLES AND FIGURES
+\usepackage{float}						% allows floats (really bad)
+\usepackage{caption}					% options for figure captions
+	\captionsetup{ %
+		labelfont=bf,					% bold caption title
+		font=small,						% small caption text
+		}
+\usepackage{wrapfig}					% really bad package for text wraps
+  %TABLES				
+	\usepackage{tabularx}					% allows more adaptible tables (also really bad)
+  %GRAPHICS
+	\usepackage{graphicx} 					% insertion of figures
+	\usepackage{epstopdf}					% vector graphics
+		\DeclareGraphicsExtensions{.eps, .pdf, .gif}
+
+%BIBLIOGRAPHY
+\usepackage[numbers]{natbib}
+%	\bibliographystyle{apalike}
+	\bibliographystyle{unsrtnat}
+	\newcommand{\biblocation}{../master_bibliography}	% causes scoping failure (default:	"./files/bibliography")
+	\newcommand{\printbib}{ %
+		\IfStrEq{\biblocation}{}{ %
+			\bibliography{../master_bibliography}
+			}{ %
+			\bibliography{\biblocation}
+			}
+		}
+	
+%OTHER PACKAGES
+\usepackage{color}						% able to colour anything and use colour boxes
+\usepackage{pst-node}					% easy relative alignment
+	\usepackage{pstricks}
+\usepackage{tikz}
+	\usetikzlibrary{tikzmark}
+
+% vertical equals
+\newcommand\rotateequal[1]{%
+  \ifmmode
+    \underset{#1}{\rotatebox{90}{$=$}}%
+  \fi
+}
+
+\newenvironment{hang}
+	{\list{}{%
+		\rightskip 	1cm
+		\parindent	1cm
+		\itemindent-1cm
+	}\item[]}
+	{\endlist}
+	
+%FORMATTING OPTIONS
+  %SANS-SERIF BOLD	[~bsf]
+	\newcommand{\mathbsf}[1]{\mathbf{\mathsf{#1}}}
+	\newcommand{\textbsf}[1]{\textbf{\textsf{#1}}}
+  %QUOTATIONS
+  	\usepackage [autostyle, english = american]{csquotes}
+  		\MakeOuterQuote{"}					% allows ""
+  	\renewcommand{\quote}[1]{``#1''}		% allows "" -> \quote{}
+  %SUPER-/SUB-SCRIPT
+	\newcommand{\super}[1]{\textsuperscript{#1}}
+	\newcommand{\sub}[1]{\textsubscript{#1}}
+
+%SHORTHAND
+  %LATIN SHORTHAND
+	\newcommand{\eg}{\emph{e.g.}\,}
+	\newcommand{\ie}{\emph{i.e.}\,} 
+  %OTHER SHORTHAND
+	\newcommand{\Schr}{Schr{\"o}dinger\ }
+	\newcommand{\dd}{\mathrm{d}}
+
+%NOTATION
+  %VECTOR NOTATION
+	\renewcommand{\v}[1]{\mathbf{#1}}			% for vectors
+  %BRA-KET NOTATION
+	\renewcommand{\b}[1]{\big\langle {#1} \big|}
+	\renewcommand{\k}[1]{\big| {#1} \big\rangle}
+	\newcommand{\bk}[2]{\big\langle {#1} \big| {#2} \big\rangle}
+	\newcommand{\expct}[1]{\big\langle {#1} \big\rangle}
+	\newcommand{\pamp}[1]{\big|#1\big|^2}
+  %SET NOTATION
+	\newcommand{\set}[1]{\left\{#1\right\}}
+	
+%SYMBOLS
+	\newcommand{\nablab}{\boldsymbol{\nabla}}	% vector del, 	"NABLA Bold"
+	\newcommand{\epsn}{\epsilon_0}				% epsilon_0,	"EpSilon Nought"
+
+%COLORS
+	\definecolor{darkgray}		{rgb}{0.2,0.2,0.2}
+	\definecolor{gray}		{rgb}{0.5,0.5,0.5}
+	\definecolor{lightgray}	{rgb}{0.8,0.8,0.8}
+	\definecolor{lightergray}	{rgb}{0.95,0.95,0.95}
+	\definecolor{lighterblue}	{rgb}{0.95,0.95,1.0}	
+	\definecolor{darkgreen}		{rgb}{0.0,0.5,0.0}
+	
+\newcommand{\note}[1]{\colorbox{lightgray}{[#1]}}
+\newcommand{\tab}{\hspace{2em}}
+
+\newcommand{\sampleA}{$ \left[\text{Fe}(\text{Htrz})_2(\text{trz})\right](\text{BF}_4) $}
+\usepackage{setspace}
+\doublespacing
+\usepackage{multicol}
+\newcommand{\labtools}{SCO \texttt{LabTools}}
+%\usepackage{minted}	% too complicated
+
+\newcommand{\cd}[1]{%
+	\colorbox{lightergray}{%
+		\begin{minipage}{\linewidth}
+			\texttt{#1}
+		\end{minipage}
+	}
+}%\colorbox{lightergray}{\texttt{#1}}}	% code
+
+\newcommand{\gencd}[1]{\texttt{\textit{\textcolor{darkgray}{<#1>}}}}	% general code
+\newcommand{\user}{\gencd{user}}
+\renewcommand{\root}{\gencd{root}}
+\newcommand{\flags}{\gencd{flags}}
+\newcommand{\inpath}{\gencd{input path}}
+\newcommand{\outpath}{\gencd{output path}}
+
+%DOCUMENT INFO
+\title{PH700 Project Software User Guide\\
+		\textbf{SCO \texttt{LabTools} Package}}
+\author{Harry Smith\thanks{hs339@kent.ac.uk}\ \thanks{Under supervision of Helena Shepherd.}}
+\date{\today}
+
+\begin{document}
+
+\include{User_Guide_content}
+
+\end{document}
